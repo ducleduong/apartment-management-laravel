@@ -9,13 +9,12 @@ class Contract extends Model
 {
     use HasFactory;
     protected $table = 'contract';
-    protected $with = ['apartment'];
 
     public function apartment() {
-        $this->hasOne(Apartment::class, 'id');
+        $this->belongsTo(Apartment::class);
     }
 
     public function resident() {
-        $this->hasMany(Resident::class, 'id');
+        $this->belongsTo(Resident::class);
     }
 }

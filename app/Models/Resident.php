@@ -10,4 +10,7 @@ class Resident extends Model
     use HasFactory;
     protected $table = 'resident';
     
+    public function contracts() {
+        return $this->hasMany(Contract::class);
+    }
 }

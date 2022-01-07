@@ -44,13 +44,13 @@ class ResidentController extends Controller
     }
 
     public function detail($id) {
-        $resident = Resident::where('id',$id)->first();
+        $resident = Resident::withCount('contracts')->with('contracts')->where('id',$id)->first();
 
         if($resident) {
             return response()->json($resident);
         }
         else {
-            return response()->json(['not found'], 404);
+            return response()->json(['Not found'], 404);
         }
     }
 
@@ -69,21 +69,13 @@ class ResidentController extends Controller
             return response()->json(['error' => $validator->getMessageBag()], 422);
         }
 
-        $resident = resident::create([
-            'last_name' => $request->last_name,
-            'first_name' => $request->first_name,
-            'birthday' => $request->birthday,
-            'gender' => $request->gender,
-            'phone_number' => $request->phone_number,
-            'identity_card_number' => $request->identity_card_number,
-            'country' => $request->country,
-        ]);
+        $resident = resident::create($request->all());
 
         return response()->json(['message'=> 'success', 'data'=>$resident],200);
     }
 
     public function update($id, Request $request){
-        $resident = Resident::with(['resident','resident_areas'])->where('id',$id)->first();
+        $resident = Resident::where('id',$id)->first();
 
         $validator = Validator::make($request->all(), [
             'first_name' => 'required',
@@ -110,10 +102,21 @@ class ResidentController extends Controller
                 'country' => $request->country,
             ]);
 
-            return response()->json(['message'=> 'success', 'data'=>$resident],200);
+            return response()->json(['message'=> 'Create success', 'data'=>$resident],200);
         } else {
-            return response()->json(['not found'], 404);
+            return response()->json(['Not found'], 404);
         }
+    }
+
+    public function delete($id) {
+        $resident = Resident::where('id',$id)->first();
+
+        if($resident) {
+            $resident->delete();
+            return response()->json(["Delete success"]);
+        } else {
+            return response()->json(["Not found"],404);
+        } 
     }
 }
 
@@ -218,5 +221,14 @@ class ResidentController extends Controller
  *     @OA\Parameter(in="path", name="id"),
  * 
  *     @OA\Response(response="200", description="Update a resident"),
+ * )
+ */
+/**
+ * @OA\Delete(
+ *     summary="Delete a resident",
+ *     tags={"Resident"},
+ *     path="/api/resident/{id}/delete",
+ *     @OA\Response(response="200", description="Delete a resident."),
+ *     @OA\Parameter(in="path",name="id")
  * )
  */

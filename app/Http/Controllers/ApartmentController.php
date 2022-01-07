@@ -50,9 +50,9 @@ class ApartmentController extends Controller
 
 
     public function detail($id) {
-        $apartment = Apartment::with(['resident','apartment_areas'])->where('id',$id)->first();
+        $apartment = Apartment::with('apartment_areas')->where('id',$id)->first();
 
-        if($apartment == []) return response()->json(['not found'], 404);
+        if($apartment == []) return response()->json(['Not found'], 404);
         else return  response()->json($apartment);
     }
 
@@ -69,32 +69,26 @@ class ApartmentController extends Controller
             return response()->json(['error' => $validator->getMessageBag()], 422);
         }
 
-        $apartment = Apartment::create([
-            'id' => $request->id,
-            'price' => $request->price,
-            'rooms' => $request->rooms,
-            'area' => $request->area,
-            'apartment_areas_id' => $request->apartment_areas_id
-        ]);
+        $apartment = Apartment::create($request->all());
 
         return response()->json(['message'=> 'success', 'data'=>$apartment],200);
     }
 
     
     public function update($id, Request $request){
-        $apartment = Apartment::with(['resident','apartment_areas'])->where('id',$id)->first();
+        $apartment = Apartment::with(['apartment_areas'])->where('id',$id)->first();
 
-        $validator = Validator::make($request->all(), [
-            'area' => 'required',
-            'rooms' => 'required',
-            'apartment_areas_id' => 'required',
-        ]);
+        if($apartment){
+            $validator = Validator::make($request->all(), [
+                'area' => 'required',
+                'rooms' => 'required',
+                'price' => 'required',
+            ]);
+    
+            if($validator->fails()) {
+                return response()->json(['error' => $validator->getMessageBag(), 'req'=>$request->all()], 422);
+            }
 
-        if($validator->fails()) {
-            return response()->json(['error' => $validator->getMessageBag()], 422);
-        }
-
-        if($apartment != []){
             $apartment->update([
                 'price' => $request->price,
                 'rooms' => $request->rooms,
@@ -103,22 +97,20 @@ class ApartmentController extends Controller
 
             return response()->json(['message'=> 'success', 'data'=>$apartment],200);
         } else {
-            return response()->json(['not found'], 404);
+            return response()->json(['Not found'], 404);
         }
     }
 
-    public function changeResident($id, Request $request) {
-        $apartment = Apartment::with(['resident','apartment_areas'])->where('id',$id)->first();
+    public function delete($id) {
+        $apartment = Apartment::where('id',$id)->first();
 
-        if($apartment != []){
-            $apartment->update([
-                'resident_id' => $request->resident_id
-            ]);
-
-            return response()->json(['message'=> 'success', 'data'=>$apartment],200);
+        if($apartment) {
+            $apartment->delete();
+            return response()->json(["Delete success"]);
         } else {
-            return response()->json(['not found'], 404);
+            return response()->json(["Not found"],404);
         }
+
     }
 }
 
@@ -128,6 +120,9 @@ class ApartmentController extends Controller
  *     summary="Get all apartments",
  *     tags={"Apartment"},
  *     path="/api/apartment",
+ *     @OA\Parameter(in="path",name="apartment_areas"),
+ *     @OA\Parameter(in="path",name="sortBy"),
+ *     @OA\Parameter(in="path",name="sortOrder"),
  *     @OA\Response(response="200", description="Display a listing of apartment.")
  * )
  */
@@ -209,26 +204,12 @@ class ApartmentController extends Controller
  *     @OA\Response(response="200", description="Update a apartment"),
  * )
  */
-
 /**
- * @OA\Patch(
- *     summary="Change resident of a apartment",
+ * @OA\Delete(
+ *     summary="Delete a apartment",
  *     tags={"Apartment"},
- *     path="/api/apartment/{id}/change-resident",
- *     @OA\RequestBody(
- *          @OA\MediaType(
- *              mediaType="multipart/form-data",
- *              @OA\Schema(
- *                   @OA\Property(
- *                      property="resident_id",
- *                      type="integer"
- *                   ),
- *              ),
- *          )
- *     ),
- * 
- *     @OA\Parameter(in="path", name="id"),
- * 
- *     @OA\Response(response="200", description="Change resident a apartment"),
+ *     path="/api/apartment/{id}/delete",
+ *     @OA\Response(response="200", description="Display a apartment."),
+ *     @OA\Parameter(in="path",name="id")
  * )
  */

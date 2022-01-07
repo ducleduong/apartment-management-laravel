@@ -33,12 +33,21 @@ Route::prefix('apartment')->group(function() {
 
     Route::put('/{id}/update', [ApartmentController::class, 'update']);
 
-    Route::patch('/{id}/change-resident', [ApartmentController::class, 'changeResident']);
+    Route::delete('/{id}/delete', [ApartmentController::class, 'delete']);
 });
 
 
 Route::prefix('apartment-areas')->group(function() {
     Route::get('/', [ApartmentAreasController::class, 'index']);
+
+    Route::get('/{id}', [ApartmentAreasController::class, 'detail']);
+
+    Route::post('/create', [ApartmentAreasController::class, 'create']);
+
+    Route::put('/{id}/update', [ApartmentAreasController::class, 'update']);
+
+    Route::delete('/{id}/delete', [ApartmentAreasController::class, 'delete']);
+
 });
 
 
@@ -50,9 +59,17 @@ Route::prefix('resident')->group(function() {
     Route::post('/create', [ResidentController::class, 'create']);
 
     Route::put('/{id}/update', [ResidentController::class, 'update']);
+
+    Route::delete('/{id}/delete', [ResidentController::class, 'delete']);
 });
 
 
 Route::prefix('contract')->group(function() {
-    Route::get('/', [ContractController::class, 'list']);
+    Route::get('/', [ContractController::class, 'index']);
+
+    Route::post('/create', [ContractController::class, 'create']);
+
+    Route::put('/{id}/update', [ContractController::class, 'update']);
+
+    Route::delete('/{id}/delete', [ContractController::class, 'delete']);
 });

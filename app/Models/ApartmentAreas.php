@@ -9,4 +9,13 @@ class ApartmentAreas extends Model
 {
     use HasFactory;
     protected $table = 'apartment_areas';
+    protected $fillable = [
+        'name',
+        'floors',
+        'address'
+    ];
+
+    public function apartments() {
+        return $this->hasMany(Apartment::class);
+    }
 }

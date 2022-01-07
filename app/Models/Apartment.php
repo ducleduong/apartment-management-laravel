@@ -9,7 +9,6 @@ class Apartment extends Model
 {
     use HasFactory;
     protected $table = 'apartment';
-    protected $hidden = ['apartment_areas_id'];
     protected $fillable = [
         'id',
         'price',
@@ -19,7 +18,7 @@ class Apartment extends Model
     ];
 
    public function apartment_areas() {
-       return $this->hasOne(ApartmentAreas::class, 'id');
+       return $this->belongsTo(ApartmentAreas::class);
    }
 
 }

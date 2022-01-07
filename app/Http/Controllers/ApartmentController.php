@@ -79,21 +79,7 @@ class ApartmentController extends Controller
         $apartment = Apartment::with(['apartment_areas'])->where('id',$id)->first();
 
         if($apartment){
-            $validator = Validator::make($request->all(), [
-                'area' => 'required',
-                'rooms' => 'required',
-                'price' => 'required',
-            ]);
-    
-            if($validator->fails()) {
-                return response()->json(['error' => $validator->getMessageBag(), 'req'=>$request->all()], 422);
-            }
-
-            $apartment->update([
-                'price' => $request->price,
-                'rooms' => $request->rooms,
-                'area' => $request->area,
-            ]);
+            $apartment->update($request->all());
 
             return response()->json(['message'=> 'success', 'data'=>$apartment],200);
         } else {
@@ -181,7 +167,7 @@ class ApartmentController extends Controller
  *     path="/api/apartment/{id}/update",
  *     @OA\RequestBody(
  *          @OA\MediaType(
- *              mediaType="multipart/form-data",
+ *              mediaType="application/json",
  *              @OA\Schema(
  *                   @OA\Property(
  *                      property="area",

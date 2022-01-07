@@ -28,7 +28,8 @@ class ContractController extends Controller
         $validator = Validator::make($request->all(), [
             'resident_id' => 'required',
             'apartment_id' => 'required',
-            'expired_at' => 'required'
+            'expired_at' => 'required',
+            'customer_address' => 'required'
         ]);
 
         if($validator->fails()) {
@@ -43,22 +44,8 @@ class ContractController extends Controller
     public function update($id, Request $request){
         $contract = Contract::where('id',$id)->first();
 
-        $validator = Validator::make($request->all(), [
-            'resident_id' => 'required',
-            'apartment_id' => 'required',
-            'expired_at' => 'required'
-        ]);
-
-        if($validator->fails()) {
-            return response()->json(['error' => $validator->getMessageBag()], 422);
-        }
-
         if($contract){
-            $contract->update([
-               'resident_id' => $request->resident_id,
-               'apartment_id' => $request->apartment_id,
-               'expired_at' => $request->expired_at
-            ]);
+            $contract->update($request->all());
 
             return response()->json(['message'=> 'Update success', 'data'=>$contract],200);
         } else {
@@ -109,6 +96,10 @@ class ContractController extends Controller
  *                      property="expired_at",
  *                      type="date"
  *                  ),
+ *                   @OA\Property(
+ *                      property="customer_address",
+ *                      type="string"
+ *                  ),
  *              ),
  *          )
  *     ),
@@ -124,7 +115,7 @@ class ContractController extends Controller
  *     path="/api/contract/{id}/update",
  *     @OA\RequestBody(
  *          @OA\MediaType(
- *              mediaType="multipart/form-data",
+ *              mediaType="application/json",
  *              @OA\Schema(
  *                   @OA\Property(
  *                      property="resident_id",
@@ -137,6 +128,10 @@ class ContractController extends Controller
  *                   @OA\Property(
  *                      property="expired_at",
  *                      type="date"
+ *                  ),
+ *                   @OA\Property(
+ *                      property="customer_address",
+ *                      type="string"
  *                  ),
  *              ),
  *          )

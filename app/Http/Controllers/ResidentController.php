@@ -77,30 +77,8 @@ class ResidentController extends Controller
     public function update($id, Request $request){
         $resident = Resident::where('id',$id)->first();
 
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'birthday' => 'required',
-            'gender' => 'required',
-            'phone_number' => 'required',
-            'identity_card_number' => 'required',
-            'country' => 'required'
-        ]);
-
-        if($validator->fails()) {
-            return response()->json(['error' => $validator->getMessageBag()], 422);
-        }
-
         if($resident){
-            $resident->update([
-                'last_name' => $request->last_name,
-                'first_name' => $request->first_name,
-                'birthday' => $request->birthday,
-                'gender' => $request->gender,
-                'phone_number' => $request->phone_number,
-                'identity_card_number' => $request->identity_card_number,
-                'country' => $request->country,
-            ]);
+            $resident->update($request->all());
 
             return response()->json(['message'=> 'Create success', 'data'=>$resident],200);
         } else {
@@ -173,6 +151,10 @@ class ResidentController extends Controller
  *                      property="country",
  *                      type="string"
  *                  ),
+ *                  @OA\Property(
+ *                      property="gender",
+ *                      type="string"
+ *                  ),
  *              ),
  *          )
  *     ),
@@ -188,7 +170,7 @@ class ResidentController extends Controller
  *     path="/api/resident/{id}/update",
  *     @OA\RequestBody(
  *          @OA\MediaType(
- *              mediaType="multipart/form-data",
+ *              mediaType="application/json",
  *              @OA\Schema(
  *                   @OA\Property(
  *                      property="first_name",
@@ -212,6 +194,10 @@ class ResidentController extends Controller
  *                  ),
  *                  @OA\Property(
  *                      property="country",
+ *                      type="string"
+ *                  ),
+ *                  @OA\Property(
+ *                      property="gender",
  *                      type="string"
  *                  ),
  *              ),

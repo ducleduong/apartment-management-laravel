@@ -84,7 +84,7 @@
                 ],
                 "requestBody": {
                     "content": {
-                        "multipart/form-data": {
+                        "application/json": {
                             "schema": {
                                 "properties": {
                                     "name": {
@@ -227,7 +227,7 @@
                 ],
                 "requestBody": {
                     "content": {
-                        "multipart/form-data": {
+                        "application/json": {
                             "schema": {
                                 "properties": {
                                     "area": {
@@ -303,6 +303,9 @@
                                     },
                                     "expired_at": {
                                         "type": "date"
+                                    },
+                                    "customer_address": {
+                                        "type": "string"
                                     }
                                 },
                                 "type": "object"
@@ -331,7 +334,7 @@
                 ],
                 "requestBody": {
                     "content": {
-                        "multipart/form-data": {
+                        "application/json": {
                             "schema": {
                                 "properties": {
                                     "resident_id": {
@@ -342,6 +345,9 @@
                                     },
                                     "expired_at": {
                                         "type": "date"
+                                    },
+                                    "customer_address": {
+                                        "type": "string"
                                     }
                                 },
                                 "type": "object"
@@ -435,6 +441,9 @@
                                     },
                                     "country": {
                                         "type": "string"
+                                    },
+                                    "gender": {
+                                        "type": "string"
                                     }
                                 },
                                 "type": "object"
@@ -463,7 +472,7 @@
                 ],
                 "requestBody": {
                     "content": {
-                        "multipart/form-data": {
+                        "application/json": {
                             "schema": {
                                 "properties": {
                                     "first_name": {
@@ -482,6 +491,9 @@
                                         "type": "string"
                                     },
                                     "country": {
+                                        "type": "string"
+                                    },
+                                    "gender": {
                                         "type": "string"
                                     }
                                 },

@@ -9,6 +9,12 @@ class Contract extends Model
 {
     use HasFactory;
     protected $table = 'contract';
+    protected $fillable = [
+        'resident_id',
+        'apartment_id',
+        'expired_at',
+        'customer_address'
+    ];
 
     public function apartment() {
         $this->belongsTo(Apartment::class);

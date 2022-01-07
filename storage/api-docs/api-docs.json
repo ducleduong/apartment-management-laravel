@@ -1,0 +1,277 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Apartment Management API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/apartment": {
+            "get": {
+                "tags": [
+                    "Apartment"
+                ],
+                "summary": "Get all apartments",
+                "responses": {
+                    "200": {
+                        "description": "Display a listing of apartment."
+                    }
+                }
+            }
+        },
+        "/api/apartment/{id}": {
+            "get": {
+                "tags": [
+                    "Apartment"
+                ],
+                "summary": "Get a detail apartment",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Display a apartment."
+                    }
+                }
+            }
+        },
+        "/api/apartment/create": {
+            "post": {
+                "tags": [
+                    "Apartment"
+                ],
+                "summary": "Add a new apartment",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "area": {
+                                        "type": "float"
+                                    },
+                                    "price": {
+                                        "type": "float"
+                                    },
+                                    "rooms": {
+                                        "type": "integer"
+                                    },
+                                    "apartment_areas_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Add a new apartment"
+                    }
+                }
+            }
+        },
+        "/api/apartment/{id}/update": {
+            "put": {
+                "tags": [
+                    "Apartment"
+                ],
+                "summary": "Update a apartment",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "area": {
+                                        "type": "float"
+                                    },
+                                    "price": {
+                                        "type": "float"
+                                    },
+                                    "rooms": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update a apartment"
+                    }
+                }
+            }
+        },
+        "/api/apartment/{id}/change-resident": {
+            "patch": {
+                "tags": [
+                    "Apartment"
+                ],
+                "summary": "Change resident of a apartment",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "resident_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Change resident a apartment"
+                    }
+                }
+            }
+        },
+        "/api/resident": {
+            "get": {
+                "tags": [
+                    "Resident"
+                ],
+                "summary": "Get all residents",
+                "responses": {
+                    "200": {
+                        "description": "Display a listing of resident."
+                    }
+                }
+            }
+        },
+        "/api/resident/{id}": {
+            "get": {
+                "tags": [
+                    "Resident"
+                ],
+                "summary": "Get a detail resident",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Display a resident."
+                    }
+                }
+            }
+        },
+        "/api/resident/create": {
+            "post": {
+                "tags": [
+                    "Resident"
+                ],
+                "summary": "Add a new resident",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string"
+                                    },
+                                    "last_name": {
+                                        "type": "string"
+                                    },
+                                    "birthday": {
+                                        "type": "date"
+                                    },
+                                    "phone_number": {
+                                        "type": "string"
+                                    },
+                                    "identity_card_number": {
+                                        "type": "string"
+                                    },
+                                    "country": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Add a new resident"
+                    }
+                }
+            }
+        },
+        "/api/resident/{id}/update": {
+            "put": {
+                "tags": [
+                    "Resident"
+                ],
+                "summary": "Update a resident",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string"
+                                    },
+                                    "last_name": {
+                                        "type": "string"
+                                    },
+                                    "birthday": {
+                                        "type": "date"
+                                    },
+                                    "phone_number": {
+                                        "type": "string"
+                                    },
+                                    "identity_card_number": {
+                                        "type": "string"
+                                    },
+                                    "country": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update a resident"
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}

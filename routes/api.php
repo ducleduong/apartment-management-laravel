@@ -85,7 +85,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
 Route::prefix('auth')->group(function() {
-    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/register', [AuthController::class, 'register'])->middleware('role:admin');
 
     Route::post('/login', [AuthController::class, 'login']);
 });

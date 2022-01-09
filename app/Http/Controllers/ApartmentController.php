@@ -44,7 +44,6 @@ class ApartmentController extends Controller
         $apartments = $apartment_query->orderBy($sortBy,$sortOrder)->paginate($limit);
         $apartments->load('apartment_areas:id,name');
 
-
         return response()->json($apartments);
     }
 

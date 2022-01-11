@@ -49,7 +49,7 @@ class AuthController extends Controller
             if(Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('auth-token')->plainTextToken;
 
-                return response()->json(['access_token' => $token, 'user' => $user]);
+                return response()->json(['access_token' => $token, 'user' => $user, 'role' => $user->getRoleNames()]);
             } else {
                 return response()->json(['error' => "Incorrect credentials"], 400); 
             }
